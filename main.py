@@ -3,10 +3,10 @@ import random
 import time
 from pygame import mixer
 
-mixer.init()  # 初始化 mixer
 MEMBERS = "Lucien, Sam, Patty, Henry, Johnny, Wendy, Mason, Aki"
 
 def play_audio():
+    mixer.init()
     mixer.music.load("fall.mp3")
     mixer.music.play()
 
