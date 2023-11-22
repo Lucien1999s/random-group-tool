@@ -1,7 +1,14 @@
 import streamlit as st
 import random
+import time
+from pygame import mixer
 
+mixer.init()  # 初始化 mixer
 MEMBERS = "Lucien, Sam, Patty, Henry, Johnny, Wendy, Mason, Aki"
+
+def play_audio():
+    mixer.music.load("fall.mp3")
+    mixer.music.play()
 
 def assign_members_to_themes(members, themes):
     """Assign members to themes"""
@@ -25,8 +32,8 @@ def interface():
     st.markdown("<h1 style='text-align: center; color: orange;'>🎁 聖誕禮物主題分配 🎁</h1>", unsafe_allow_html=True)
     st.markdown("<div style='font-size: 20px;'>參與人員</div>", unsafe_allow_html=True)
 
-    members = st.text_area("",value=MEMBERS)
-    st.markdown("<div style='font-size: 20px;'>輸入主題名稱(每行一個主題)</div>", unsafe_allow_html=True)
+    members = st.text_area("", value=MEMBERS)
+    st.markdown("<div style='font-size: 20px;'>主題名稱(每行一個主題)</div>", unsafe_allow_html=True)
     themes_input = st.text_area("")
 
     if st.button("隨機分組"):
@@ -35,12 +42,13 @@ def interface():
         else:
             themes = themes_input.split("\n")
             members = members.split(",")
-            result = assign_members_to_themes(members=members, themes=themes)
+            play_audio()
+            gif_placeholder = st.empty()
+            gif_placeholder.image("angry-birds.gif")
+            time.sleep(2)
+            gif_placeholder.empty()
+            st.table(assign_members_to_themes(members=members, themes=themes))
 
-            if isinstance(result, str):
-                st.error(result)
-            else:
-                st.table(result)
 
 if __name__ == "__main__":
     interface()
